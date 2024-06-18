@@ -1,0 +1,59 @@
+name: ActiveRecord Metadata
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  schema-metadata:
+    name: Export and Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.0'
+          bundler-cache: true
+  
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
+  
+      - name: Set up database
+        run: |
+          bin/rails db:prepare
+
+      - name: Setup DB
+        run: bin/rake db:create db:schema:load
+
+      - name: Export
+        run: bin/rake activerecord_metadata:export
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        with:
+          commit_message: "[Automated] Update ActiveRecord metadata"
+
+      - name: Validate
+        id: activerecord-metadata-report
+        uses: ./.github/actions/activerecord-metadata-report
+        with:
+          repository: ${{ github.repository }}
+          commit_sha: ${{ github.sha }}
+
+      - name: Request Review Changes
+        if: ${{ steps.activerecord-metadata-report.outputs.activerecord_metadata_offenses_found == 'true' }}
+        uses: ntsd/auto-request-changes-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          review-message: ./activerecord-metadata-results.md
+          # review-message: ${{ format('{0}activerecord-metadata-results.md', './') }}
+          # github_repository: ${{ github.repository }}
+          # pr_number: ${{ github.event.number }}
+          # file_input: ${{ format('{0}activerecord-metadata-results.md', './') }}
+          # placeholder_identifier: ${{ format('identity-header-{0}', inputs.target_type) }}
