@@ -32,8 +32,8 @@ runs:
         echo "" >> $REPORT_NAME
         echo "$FIXME_TAGS_MESSAGE" >> $REPORT_NAME
 
-        # Check for schema_metadata.yml files with fixme
-        if find . -name 'schema_metadata.yml' -exec grep -q ':FIXME' {} \; ; then
+        # Check for schema_metadata.yaml files with fixme
+        if find . -name 'schema_metadata.yaml' -exec grep -q ':FIXME' {} \; ; then
           while IFS= read -r line; do
             file_path=$(echo "$line" | cut -d':' -f1)
             line_number=$(echo "$line" | cut -d':' -f2)
@@ -42,7 +42,7 @@ runs:
             # Add the link to activerecord-metadata-results.md
             echo "- [ ] [${file_path#./}:${line_number}](${github_url})" >> $REPORT_NAME
             found_fixme=true
-          done < <(find . -name 'schema_metadata.yml' -exec grep -Hn ':FIXME' {} \; | cut -d':' -f1,2)
+          done < <(find . -name 'schema_metadata.yaml' -exec grep -Hn ':FIXME' {} \; | cut -d':' -f1,2)
         fi
 
         echo "offenses_found=$found_fixme" >> $GITHUB_OUTPUT
