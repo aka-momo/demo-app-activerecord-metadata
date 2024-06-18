@@ -1,0 +1,30 @@
+---
+primary:
+  users:
+    columns:
+      created_at:
+        tags:
+          personal_data: false
+          senstive_data: false
+        type: datetime
+      first_name:
+        tags:
+          personal_data: true
+          senstive_data: false
+        type: string
+      id:
+        tags:
+          personal_data: false
+          senstive_data: false
+        type: integer
+      last_name:
+        tags:
+          personal_data: true
+          senstive_data: false
+        type: string
+      updated_at:
+        tags:
+          personal_data: false
+          senstive_data: false
+        type: datetime
+    model_name: User
