@@ -1,0 +1,50 @@
+name: activerecord-metadata-report
+description: "ActiveRecord Metadata report"
+inputs:
+  repository:
+    description: Repository name (owner/repo)
+    required: true
+  commit_sha:
+    description: Commit SHA
+    required: true
+outputs:
+  activerecord_metadata_offenses_found:
+    description: "activerecord_metadata offenses boolean"
+    value: ${{ steps.activerecord-metadata-report.outputs.offenses_found }}
+runs:
+  using: "composite"
+  steps:
+    - name: Request Review Changes
+      id: activerecord-metadata-report
+      shell: bash
+      env:
+        REPORT_NAME: activerecord-metadata-results.md
+        REPOSITORY: ${{ inputs.repository }}
+        COMMIT_SHA: ${{ inputs.commit_sha }}
+        MISSING_DEFINITION_HEADER: "## ⚠️ Missing ActiveRecord metadata definition"
+        INTRO_MESSAGE: "The PR introduced changes to the database schema and they should be annotated properly. These annotations empower product features, like Personal Data export requests and data deletions."
+        FIXME_TAGS_MESSAGE: "**Please update the following tags, they are marked as `:fixme`**"
+        INFO_MESSAGE: "ℹ️ Please refer to [How to fix ActiveRecord metadata tags](https://betterup.atlassian.net/wiki/spaces/PT/pages/3715006784/How+to+fix+activerecord+metadata+tags) for more information."
+      run: |
+        found_fixme=false
+        echo "$MISSING_DEFINITION_HEADER" >> $REPORT_NAME
+        echo "$INTRO_MESSAGE" >> $REPORT_NAME
+        echo "" >> $REPORT_NAME
+        echo "$FIXME_TAGS_MESSAGE" >> $REPORT_NAME
+
+        # Check for schema_metadata.yaml files with fixme
+        if find . -name 'schema_metadata.yaml' -exec grep -q ':FIXME' {} \; ; then
+          while IFS= read -r line; do
+            file_path=$(echo "$line" | cut -d':' -f1)
+            line_number=$(echo "$line" | cut -d':' -f2)
+            # Construct the GitHub URL for the file
+            github_url="https://github.com/${REPOSITORY}/blob/${COMMIT_SHA}/${file_path#./}#L${line_number}"
+            # Add the link to activerecord-metadata-results.md
+            echo "- [ ] [${file_path#./}:${line_number}](${github_url})" >> $REPORT_NAME
+            found_fixme=true
+          done < <(find . -name 'schema_metadata.yaml' -exec grep -Hn ':FIXME' {} \; | cut -d':' -f1,2)
+        fi
+
+        echo "offenses_found=$found_fixme" >> $GITHUB_OUTPUT
+        echo "" >> $REPORT_NAME
+        echo "$INFO_MESSAGE" >> $REPORT_NAME
