@@ -9,7 +9,7 @@ primary:
         type: datetime
       first_name:
         tags:
-          personal_data: ":FIXME"
+          personal_data: false
           senstive_data: ":FIXME"
         type: string
       id:
