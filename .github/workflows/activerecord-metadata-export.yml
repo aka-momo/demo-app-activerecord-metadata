@@ -1,0 +1,36 @@
+name: ActiveRecord Metadata
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  schema-metadata:
+    name: Export
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.0'
+          bundler-cache: true
+  
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Setup DB
+        run: bin/rake db:create db:schema:load
+
+      - name: Export
+        run: bin/rake activerecord_metadata:export
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5.0.1
+        with:
+          commit_message: "[Automated] Update ActiveRecord metadata"

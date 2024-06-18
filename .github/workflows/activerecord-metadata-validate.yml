@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   schema-metadata:
-    name: Export and Validate
+    name: Validate
     runs-on: ubuntu-latest
 
     steps:
@@ -30,14 +30,6 @@ jobs:
 
       - name: Setup DB
         run: bin/rake db:create db:schema:load
-
-      - name: Export
-        run: bin/rake activerecord_metadata:export
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5.0.1
-        with:
-          commit_message: "[Automated] Update ActiveRecord metadata"
 
       - name: Validate
         id: activerecord-metadata-report
