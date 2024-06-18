@@ -1,0 +1,18 @@
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/bindex-0.8.1/ext/skiptrace
+/opt/hostedtoolcache/Ruby/3.3.0/x64/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-sop59u sitelibdir\=./.gem.20240618-1763-sop59u clean
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-sop59u sitelibdir\=./.gem.20240618-1763-sop59u
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.so
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-sop59u sitelibdir\=./.gem.20240618-1763-sop59u install
+/usr/bin/install -c -m 0755 cruby.so ./.gem.20240618-1763-sop59u/skiptrace/internal
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-sop59u sitelibdir\=./.gem.20240618-1763-sop59u clean

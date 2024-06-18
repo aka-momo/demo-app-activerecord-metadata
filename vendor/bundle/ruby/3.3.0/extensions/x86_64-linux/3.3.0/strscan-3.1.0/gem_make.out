@@ -1,0 +1,20 @@
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+/opt/hostedtoolcache/Ruby/3.3.0/x64/bin/ruby extconf.rb
+checking for onig_region_memsize() in ruby.h... yes
+checking for rb_reg_onig_match() in ruby.h... yes
+creating Makefile
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-btrl7r sitelibdir\=./.gem.20240618-1763-btrl7r clean
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-btrl7r sitelibdir\=./.gem.20240618-1763-btrl7r
+compiling strscan.c
+linking shared-object strscan.so
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-btrl7r sitelibdir\=./.gem.20240618-1763-btrl7r install
+/usr/bin/install -c -m 0755 strscan.so ./.gem.20240618-1763-btrl7r
+
+current directory: /home/runner/work/demo-app-activerecord-metadata/demo-app-activerecord-metadata/vendor/bundle/ruby/3.3.0/gems/strscan-3.1.0/ext/strscan
+make DESTDIR\= sitearchdir\=./.gem.20240618-1763-btrl7r sitelibdir\=./.gem.20240618-1763-btrl7r clean
